@@ -1,0 +1,61 @@
+{
+    "user": {
+        "login": "alan",
+        "password": "123"
+    },
+    "organization": [{
+            "id": 1,
+            "name": "Bell",
+            "address": "Москва, ул ",
+            "INN": 89037281456
+        },
+        {
+            "id": 2,
+            "name": "Not Bell",
+            "address": "Москва, ул ",
+            "INN": 89037281456
+        }
+    ],
+    "division": [{
+            "id": 1,
+            "id_organization": 1,
+            "name": "Маркетинг",
+            "phone": 89037281456
+        },
+        {
+            "id": 2,
+            "id_organization": 1,
+            "name": "Разработка",
+            "phone": 89037281456
+        }
+    ],
+    "employee": [{
+            "id": 1,
+            "id_division": 2,
+            "FIO": "Апеков Алан Рустамович",
+            "address": "Москва, ул ",
+            "position": "Junior Front"
+        },
+        {
+            "id": 2,
+            "id_division": 1,
+            "FIO": "Unknown1 Unknown Unknown",
+            "address": "Москва, ул ",
+            "position": "Таргетолог"
+        },
+        {
+            "id": 3,
+            "id_division": 1,
+            "FIO": "Unknown2 Unknown Unknown",
+            "address": "Москва, ул ",
+            "position": "Таргетолог"
+        },
+        {
+            "id": 2,
+            "id_division": 2,
+            "FIO": "Unknown3 Unknown Unknown",
+            "address": "Москва, ул ",
+            "position": "Backend"
+        }
+    ]
+}
