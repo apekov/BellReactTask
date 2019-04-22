@@ -26,18 +26,25 @@ export class DbModel {
     let result = await db.get("organization");
     return result;
   }
-
-  public static async addOganization(data: dbInterface.IOrganization) {
-    await db
+  private static async getId(type: string) {
+    const esence = await db.get(type).value();
+    return esence.length + 1;
+  }
+  public static async addOrganization(data: dbInterface.IOrganization) {
+    const id = await this.getId("organization");
+    let callback = await db
       .get("organization")
       .push({
-        id: data.id,
+        id: id,
         name: data.name,
         address: data.address,
         INN: data.INN
       })
       .write();
+    return callback;
   }
+
+  public static async deleteOrganization(id: number) {}
 
   public static async getDivisionById(id: number) {
     let result = await db
@@ -48,15 +55,17 @@ export class DbModel {
   }
 
   public static async addDivision(data: dbInterface.IDivision) {
-    await db
+    const id = await this.getId("division");
+    let callback = await db
       .get("division")
       .push({
-        id: data.id,
+        id: id,
         id_organization: data.id_organization,
         name: data.name,
         phone: data.phone
       })
       .write();
+    return callback;
   }
 
   public static async getEmployeeById(id: number) {
@@ -68,15 +77,34 @@ export class DbModel {
   }
 
   public static async addEmployee(data: dbInterface.IEmployee) {
-    await db
+    const id = await this.getId("employee");
+    let callback = await db
       .get("employee")
       .push({
-        id: data.id,
+        id: id,
         id_division: data.id_division,
         FIO: data.FIO,
         address: data.address,
         position: data.position
       })
       .write();
+    return callback;
+  }
+
+  public static async deleteEsense(id: number, type: string) {
+    let deleted = await db
+      .get(type)
+      .remove({ id: id })
+      .write();
+    return deleted;
+  }
+
+  public static async editEsense(id: number, type: string, data: any) {
+    let edited = await db
+      .get(type)
+      .find({ id: id })
+      .assign(data)
+      .write();
+    return edited;
   }
 }

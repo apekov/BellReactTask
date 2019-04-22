@@ -1,5 +1,5 @@
 import { IActionType, IDivision, IEmployee } from "../common";
-import { ActionTypes, AsyncActionTypes } from "../Actions/Consts";
+import { ActionTypes, AsyncActionTypes, CrudTypes } from "../Actions/Consts";
 
 export interface IOrganizationItem {
   id: number;
@@ -22,20 +22,24 @@ const initialState = {
 export function organizationReducer(state = initialState, action: IActionType) {
   switch (action.type) {
     // Organization reducer
-    case `${ActionTypes.GET_ORGANIZATION}${AsyncActionTypes.BEGIN}`:
+    case `${CrudTypes.GET}${ActionTypes.ORGANIZATION}${AsyncActionTypes.BEGIN}`:
       return {
         ...state,
         loading: true
       };
 
-    case `${ActionTypes.GET_ORGANIZATION}${AsyncActionTypes.SUCCESS}`:
+    case `${CrudTypes.GET}${ActionTypes.ORGANIZATION}${
+      AsyncActionTypes.SUCCESS
+    }`:
       return {
         ...state,
         organization: action.payload,
         loading: false
       };
 
-    case `${ActionTypes.GET_ORGANIZATION}${AsyncActionTypes.FAILURE}`:
+    case `${CrudTypes.GET}${ActionTypes.ORGANIZATION}${
+      AsyncActionTypes.FAILURE
+    }`:
       return {
         ...state,
         loading: false,
@@ -43,13 +47,13 @@ export function organizationReducer(state = initialState, action: IActionType) {
       };
 
     // Division reducer
-    case `${ActionTypes.GET_DIVISION}${AsyncActionTypes.BEGIN}`:
+    case `${CrudTypes.GET}${ActionTypes.DIVISION}${AsyncActionTypes.BEGIN}`:
       return {
         ...state,
         loading: true
       };
 
-    case `${ActionTypes.GET_DIVISION}${AsyncActionTypes.SUCCESS}`:
+    case `${CrudTypes.GET}${ActionTypes.DIVISION}${AsyncActionTypes.SUCCESS}`:
       console.log(action.payload);
       return {
         ...state,
@@ -57,7 +61,7 @@ export function organizationReducer(state = initialState, action: IActionType) {
         loading: false
       };
 
-    case `${ActionTypes.GET_DIVISION}${AsyncActionTypes.FAILURE}`:
+    case `${CrudTypes.GET}${ActionTypes.DIVISION}${AsyncActionTypes.FAILURE}`:
       return {
         ...state,
         loading: false,
@@ -66,20 +70,20 @@ export function organizationReducer(state = initialState, action: IActionType) {
 
     // Employee reducer
 
-    case `${ActionTypes.GET_EMPLOYEE}${AsyncActionTypes.BEGIN}`:
+    case `${CrudTypes.GET}${ActionTypes.EMPLOYEE}${AsyncActionTypes.BEGIN}`:
       return {
         ...state,
         loading: true
       };
 
-    case `${ActionTypes.GET_EMPLOYEE}${AsyncActionTypes.SUCCESS}`:
+    case `${CrudTypes.GET}${ActionTypes.EMPLOYEE}${AsyncActionTypes.SUCCESS}`:
       return {
         ...state,
         employee: action.payload,
         loading: false
       };
 
-    case `${ActionTypes.GET_EMPLOYEE}${AsyncActionTypes.FAILURE}`:
+    case `${CrudTypes.GET}${ActionTypes.EMPLOYEE}${AsyncActionTypes.FAILURE}`:
       return {
         ...state,
         loading: false,

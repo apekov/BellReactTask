@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Link, Route, Switch } from "react-router-dom";
 
-import { Home } from "../components/Home";
-import { Login } from "../components/Login";
-import { Organization } from "../components/Organization";
+import { Division } from "../components/Division/Division";
+import { Employee } from "../components/Employee/Employee";
+import { Home } from "../components/Home/Home";
+import { Login } from "../components/Login/Login";
+import { Organization } from "../components/Organization/Organization";
 
 import "./App.less";
 
@@ -48,6 +50,8 @@ class App extends React.Component {
             <Route path="/" component={Home} exact />
             <Route path="/login" component={Login} />
             <Route path="/organization" component={Organization} />
+            <Route path="/divison/:organizationId" component={Division} />
+            <Route path="/employee/:divisionId" component={Employee} />
           </Switch>
         </div>
       </>

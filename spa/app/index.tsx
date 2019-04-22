@@ -12,9 +12,7 @@ import { appStore } from "./Store/Store";
 ReactDOM.render(
   <Provider store={appStore}>
     <Router>
-      <>
-        <App />
-      </>
+      <App />
     </Router>
   </Provider>,
   document.getElementById("app")

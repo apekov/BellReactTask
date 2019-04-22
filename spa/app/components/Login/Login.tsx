@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IActionType } from "../common";
-import { Actions } from "../Actions/Actions";
+import { IActionType } from "../../common";
+import { Actions } from "../../Actions/Actions";
 // import { IStoreState } from "../Reducers/userReducer";
 
 interface IStateProps {
@@ -24,9 +24,6 @@ export interface IDispatchProps {
 type TProps = IStateProps & IDispatchProps;
 
 class Login extends React.Component<TProps, {}> {
-  constructor(props: any) {
-    super(props);
-  }
   state = {
     login: "",
     password: ""
