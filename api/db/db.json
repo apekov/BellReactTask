@@ -19,8 +19,8 @@
     {
       "id": 3,
       "name": "Alan Corp ",
-      "address": "dsadsa",
-      "INN": 21321321
+      "address": "ul red",
+      "INN": 34234324324
     }
   ],
   "division": [
@@ -37,10 +37,28 @@
       "phone": 89037281456
     },
     {
-      "id": 3,
-      "id_organization": 3,
+      "id": 4,
+      "id_organization": null,
+      "name": "FSDFDS",
+      "phone": "432432"
+    },
+    {
+      "id": 5,
+      "id_organization": null,
       "name": "test",
-      "phone": "9064840728"
+      "phone": "32321324"
+    },
+    {
+      "id": 6,
+      "id_organization": 3,
+      "name": "test 434",
+      "phone": "43324"
+    },
+    {
+      "id": 7,
+      "id_organization": 3,
+      "name": "Marketing",
+      "phone": "4342432432"
     }
   ],
   "employee": [
@@ -57,6 +75,13 @@
       "FIO": "Unknown1 Unknown Unknown",
       "address": "Москва, ул ",
       "position": "Таргетолог"
+    },
+    {
+      "id": 3,
+      "id_division": 7,
+      "FIO": "alan apekov",
+      "address": "ul frd",
+      "position": "junior"
     }
   ]
 }

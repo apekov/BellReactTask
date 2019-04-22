@@ -135,7 +135,7 @@ export class Actions {
     Axios.post(`http://localhost:8080/createDivision`, data)
       .then(res => {
         if (res.data) {
-          console.log("sucess add dimployee");
+          console.log("sucess add division");
         } else {
           throw "error";
         }
@@ -150,6 +150,20 @@ export class Actions {
       .then(res => {
         if (res.data) {
           console.log("sucess delete Division");
+        } else {
+          throw "error";
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  editDivision = (data: any) => {
+    Axios.put(`http://localhost:8080/editDivision`, data)
+      .then(res => {
+        if (res.data) {
+          console.log("sucess edit Division");
         } else {
           throw "error";
         }
@@ -205,6 +219,20 @@ export class Actions {
       .then(res => {
         if (res.data) {
           console.log("sucess delete Employee");
+        } else {
+          throw "error";
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  editEmployee = (data: any) => {
+    Axios.put(`http://localhost:8080/editEmployee`, data)
+      .then(res => {
+        if (res.data) {
+          console.log("sucess edit Employee");
         } else {
           throw "error";
         }

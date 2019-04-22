@@ -31,11 +31,19 @@ type TProps = IStateProps & IDispatchProps;
 
 class Organization extends React.Component<TProps, {}> {
   state = {
+    // модальное окно для удаления
     confirmOpen: false,
+    // модальное окно для создания
     modalOpen: false,
+    // модальное окно для редактирования
     editOpen: false,
+    // id удаляемого элемента
     delatedId: "",
+    // id изменяемого элемента
     editedId: "",
+    // обозначение успешности выполнения действия
+    completed: false,
+    // Поля для заполнения
     inputItems: {
       name: "",
       address: "",
@@ -43,10 +51,12 @@ class Organization extends React.Component<TProps, {}> {
     }
   };
 
+  // Получение данных при примонтировании элемента
   componentDidMount() {
     this.props.actions.getOrganizations();
   }
 
+  // Открытие диалогового окна для добавления новой записи
   handleOpenModal = (e: any) => {
     e.preventDefault();
     this.setState({
@@ -54,6 +64,8 @@ class Organization extends React.Component<TProps, {}> {
       modalOpen: true
     });
   };
+
+  // Закрытие дилогого окна
   handleModalCancel = (e: any) => {
     e.preventDefault();
     this.setState({
@@ -64,12 +76,19 @@ class Organization extends React.Component<TProps, {}> {
       editedId: ""
     });
   };
+
+  // Нажатие на кнопку для сохранения новой записи
   handleModalSubmit = (e: any) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.addOrganization(inputItems);
+    this.setState({
+      ...this.state,
+      completed: true
+    });
   };
 
+  // Заполенение state
   handleInputChange = (e: any) => {
     const target = e.currentTarget;
     this.setState({
@@ -81,6 +100,7 @@ class Organization extends React.Component<TProps, {}> {
     });
   };
 
+  // Открытие окна подтверждения удаления
   handleOpenConfirm = (e: any) => {
     e.preventDefault();
     this.setState({
@@ -90,12 +110,18 @@ class Organization extends React.Component<TProps, {}> {
     });
   };
 
+  // Удаление записи
   deleteItem = (e: any) => {
-    e.preventDefault;
+    e.preventDefault();
     const { delatedId } = this.state;
     this.props.actions.deleteOrganization(delatedId);
+    this.setState({
+      ...this.state,
+      completed: true
+    });
   };
 
+  // Открытие окна для редактирования записи
   handleOpenEdit = (e: any) => {
     e.preventDefault();
     const id = e.currentTarget.dataset.id;
@@ -112,18 +138,24 @@ class Organization extends React.Component<TProps, {}> {
     });
   };
 
+  // Поиск записи в массиве полученных данных
   searchEditedItem(id: string) {
     return this.props.organization.find(item => {
       return `${item.id}` === id;
     });
   }
 
+  // Сохранение измененной записи
   saveEditedItem = (e: any) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.editOrganization({
       id: this.state.editedId,
       ...inputItems
+    });
+    this.setState({
+      ...this.state,
+      completed: true
     });
   };
 
@@ -180,7 +212,13 @@ class Organization extends React.Component<TProps, {}> {
     return template;
   }
   render() {
-    const { modalOpen, inputItems, confirmOpen, editOpen } = this.state;
+    const {
+      modalOpen,
+      inputItems,
+      confirmOpen,
+      editOpen,
+      completed
+    } = this.state;
     return (
       <>
         <div className="heading">
@@ -200,6 +238,7 @@ class Organization extends React.Component<TProps, {}> {
         <div className="row text-center">{this.renderItems()}</div>
         {/* Modal add */}
         <Modal
+          completed={completed}
           isOpen={modalOpen}
           title="Добавление организации"
           onCancelAction={this.handleModalCancel}
@@ -214,6 +253,7 @@ class Organization extends React.Component<TProps, {}> {
         </Modal>
         {/* Modal delete */}
         <Modal
+          completed={completed}
           isOpen={confirmOpen}
           title="Удаление организации"
           onCancelAction={this.handleModalCancel}
@@ -225,6 +265,7 @@ class Organization extends React.Component<TProps, {}> {
         </Modal>
         {/* Modal edit */}
         <Modal
+          completed={completed}
           isOpen={editOpen}
           title="Редактирование организации"
           onCancelAction={this.handleModalCancel}

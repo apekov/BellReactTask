@@ -119,6 +119,33 @@ export const Controller = {
           res.json(edited);
         }
       });
+    },
+    editDivision: async (req: Request, res: Response) => {
+      let form = new Formidable.IncomingForm();
+      form.parse(req, async (err, fields: any) => {
+        const id = parseInt(fields.id, 10);
+        let edited = await DbModel.editEsense(id, "division", {
+          name: fields.name,
+          phone: fields.phone
+        });
+        if (edited) {
+          res.json(edited);
+        }
+      });
+    },
+    editEmployee: async (req: Request, res: Response) => {
+      let form = new Formidable.IncomingForm();
+      form.parse(req, async (err, fields: any) => {
+        const id = parseInt(fields.id, 10);
+        let edited = await DbModel.editEsense(id, "employee", {
+          FIO: fields.FIO,
+          address: fields.address,
+          position: fields.position
+        });
+        if (edited) {
+          res.json(edited);
+        }
+      });
     }
   }
 };

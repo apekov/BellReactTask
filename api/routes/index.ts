@@ -25,5 +25,7 @@ routes.delete("/deleteDivision", Controller.delete.DeleteDivision);
 routes.delete("/deleteEmployee", Controller.delete.DeleteEmployee);
 
 routes.put("/editOrganization", Controller.put.editOrganization);
+routes.put("/editDivision", Controller.put.editDivision);
+routes.put("/editEmployee", Controller.put.editEmployee);
 
 export default routes;

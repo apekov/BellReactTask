@@ -6,6 +6,7 @@ import "./Modal.less";
 interface IModal {
   title: string;
   isOpen: boolean;
+  completed: boolean;
   onCancelAction: any;
   onSubmitAction: any;
 }
@@ -26,7 +27,8 @@ class Modal extends React.Component<IModal, {}> {
       isOpen,
       onCancelAction,
       onSubmitAction,
-      children
+      children,
+      completed
     } = this.props;
     return (
       <>
@@ -42,25 +44,34 @@ class Modal extends React.Component<IModal, {}> {
                     <b>X</b>
                   </div>
                 </div>
-                <div className="modal_body">{children}</div>
-                <div className="modal_body">
-                  <Button
-                    disabled={false}
-                    active={false}
-                    className="btn-warning"
-                    onClick={onCancelAction}
-                  >
-                    Отмена
-                  </Button>
-                  <Button
-                    disabled={false}
-                    active={false}
-                    className="btn-success"
-                    onClick={onSubmitAction}
-                  >
-                    Подтвердить
-                  </Button>
-                </div>
+                {completed ? (
+                  <p>
+                    Действие успешно выполнено. Перезайдите на страницу чтобы
+                    увидеть изменение
+                  </p>
+                ) : (
+                  <>
+                    <div className="modal_body">{children}</div>
+                    <div className="modal_body">
+                      <Button
+                        disabled={false}
+                        active={false}
+                        className="btn-warning"
+                        onClick={onCancelAction}
+                      >
+                        Отмена
+                      </Button>
+                      <Button
+                        disabled={false}
+                        active={false}
+                        className="btn-success"
+                        onClick={onSubmitAction}
+                      >
+                        Подтвердить
+                      </Button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </Portal>
