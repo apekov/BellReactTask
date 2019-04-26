@@ -18,9 +18,9 @@
     },
     {
       "id": 3,
-      "name": "Alan Corp ",
+      "name": "Alan Corp",
       "address": "ul red",
-      "INN": 34234324324
+      "INN": "34234324324"
     }
   ],
   "division": [
@@ -59,6 +59,18 @@
       "id_organization": 3,
       "name": "Marketing",
       "phone": "4342432432"
+    },
+    {
+      "id": 7,
+      "id_organization": 3,
+      "name": "alan test",
+      "phone": "343243242"
+    },
+    {
+      "id": 8,
+      "id_organization": 3,
+      "name": "Marketing 2",
+      "phone": "434243243232"
     }
   ],
   "employee": [
@@ -79,9 +91,16 @@
     {
       "id": 3,
       "id_division": 7,
-      "FIO": "alan apekov",
+      "FIO": "alan apekov 2",
       "address": "ul frd",
-      "position": "junior"
+      "position": "middle"
+    },
+    {
+      "id": 4,
+      "id_division": 7,
+      "FIO": "alan dsa",
+      "address": "ul frd",
+      "position": "sinior"
     }
   ]
 }

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IActionType } from "../../common";
 import { Actions } from "../../Actions/Actions";
-// import { IStoreState } from "../Reducers/userReducer";
 
 interface IStateProps {
   loginStatus: boolean;
@@ -14,33 +13,42 @@ interface IStateProps {
  * Пропсы для передачи экшенов.
  * @prop {Actions} actions Экшены для работы приложения.
  */
-export interface IDispatchProps {
+interface IDispatchProps {
   actions: Actions;
 }
 
+interface IStateComponent{
+  login: string,
+  password: string
+}
+
 /**
- * Итоговые пропсы компонента
- */
+* Итоговые пропсы и state компонента
+*/
 type TProps = IStateProps & IDispatchProps;
 
-class Login extends React.Component<TProps, {}> {
+class Login extends React.Component<TProps, IStateComponent> {
   state = {
     login: "",
     password: ""
   };
 
-  onChange = (e: any) => {
+  onChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const { id, value } = e.currentTarget;
+    // @ts-ignore
     this.setState({ [id]: value });
   };
 
-  handleLogin = (e: any) => {
+  handleLogin = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { login, password } = this.state;
     this.props.actions.onLogin({ login: login, password: password });
   };
 
-  handleLogout = () => this.props.actions.onLogout();
+  handleLogout = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    this.props.actions.onLogout()
+  };
 
   renderForm = () => {
     const { loginStatus } = this.props;
@@ -103,7 +111,10 @@ class Login extends React.Component<TProps, {}> {
     );
   }
 }
-function mapStateToProps(state: any) {
+interface IUser { 
+  user: IStateComponent
+}
+function mapStateToProps(state: IUser) {
   return state.user;
 }
 

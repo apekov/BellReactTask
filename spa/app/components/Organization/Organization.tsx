@@ -3,17 +3,17 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
-import { IActionType } from "../../common";
+import { IActionType, IStateComponent } from "../../common";
 import { Actions } from "../../Actions/Actions";
 import { IOrganizationItem } from "../../Reducers/organizationReducer";
 import { Button } from "../button/Button";
 import { Modal } from "../modal/Modal";
 import { Inputs } from "../FormsInput/InputsItems";
 
+
 interface IStateProps {
   organization: IOrganizationItem[];
   loading: boolean;
-  match: any;
 }
 
 /**
@@ -24,12 +24,23 @@ export interface IDispatchProps {
   actions: Actions;
 }
 
+interface IInputInterface {
+    name: string,
+    address: string,
+    INN: string
+}
+
+interface IStateComponentInput {
+  inputItems: IInputInterface
+}
+
 /**
- * Итоговые пропсы компонента
+ * Итоговые пропсы и state компонента
  */
 type TProps = IStateProps & IDispatchProps;
+type TState = IStateComponent & IStateComponentInput
 
-class Organization extends React.Component<TProps, {}> {
+class Organization extends React.Component<TProps, TState> {
   state = {
     // модальное окно для удаления
     confirmOpen: false,
@@ -57,7 +68,7 @@ class Organization extends React.Component<TProps, {}> {
   }
 
   // Открытие диалогового окна для добавления новой записи
-  handleOpenModal = (e: any) => {
+  handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
@@ -66,7 +77,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Закрытие дилогого окна
-  handleModalCancel = (e: any) => {
+  handleModalCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       confirmOpen: false,
@@ -78,7 +89,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Нажатие на кнопку для сохранения новой записи
-  handleModalSubmit = (e: any) => {
+  handleModalSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.addOrganization(inputItems);
@@ -89,7 +100,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Заполенение state
-  handleInputChange = (e: any) => {
+  handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
       ...this.state,
@@ -101,7 +112,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Открытие окна подтверждения удаления
-  handleOpenConfirm = (e: any) => {
+  handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
@@ -111,7 +122,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Удаление записи
-  deleteItem = (e: any) => {
+  deleteItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { delatedId } = this.state;
     this.props.actions.deleteOrganization(delatedId);
@@ -122,7 +133,7 @@ class Organization extends React.Component<TProps, {}> {
   };
 
   // Открытие окна для редактирования записи
-  handleOpenEdit = (e: any) => {
+  handleOpenEdit = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     const id = e.currentTarget.dataset.id;
     const editemItem = this.searchEditedItem(id);
@@ -133,20 +144,20 @@ class Organization extends React.Component<TProps, {}> {
       inputItems: {
         name: editemItem.name,
         address: editemItem.address,
-        INN: editemItem.INN
+        INN: `${editemItem.INN}`
       }
     });
   };
 
   // Поиск записи в массиве полученных данных
-  searchEditedItem(id: string) {
+  searchEditedItem(id: string): IOrganizationItem {
     return this.props.organization.find(item => {
       return `${item.id}` === id;
     });
   }
 
   // Сохранение измененной записи
-  saveEditedItem = (e: any) => {
+  saveEditedItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.editOrganization({
@@ -161,7 +172,7 @@ class Organization extends React.Component<TProps, {}> {
 
   renderItems() {
     const { organization, loading } = this.props;
-    let template: any;
+    let template: JSX.Element | JSX.Element[] | string;
     if (loading) {
       template = <p>Загрузка</p>;
     } else {
@@ -282,7 +293,12 @@ class Organization extends React.Component<TProps, {}> {
     );
   }
 }
-function mapStateToProps(state: any) {
+
+interface IMapStateToProps {
+  organization: IOrganizationItem[]
+}
+
+function mapStateToProps(state: IMapStateToProps) {
   return state.organization;
 }
 

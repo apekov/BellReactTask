@@ -1,25 +1,44 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IActionType } from "../../common";
+import { match} from "react-router-dom"
+import { IActionType, IStateComponent } from "../../common";
 import { IEmployee } from "../../common";
 import { Actions } from "../../Actions/Actions";
 import { Button } from "../button/Button";
 import { Modal } from "../modal/Modal";
 import { Inputs } from "../FormsInput/InputsItems";
 
-interface IStateProps {
-  employee: IEmployee[];
-  match: any;
+interface IDetailParams {
+  divisionId: string;
 }
 
-export interface IDispatchProps {
+interface IStateProps {
+  employee: IEmployee[];
+  match?: match<IDetailParams>;
+}
+
+interface IDispatchProps {
   actions: Actions;
 }
 
-type TProps = IStateProps & IDispatchProps;
+interface IInputInterface {
+  FIO: string,
+  address: string,
+  position: string
+}
 
-class Employee extends React.Component<TProps, {}> {
+interface IStateComponentInput {
+  inputItems: IInputInterface;
+}
+
+/**
+* Итоговые пропсы и state компонента
+*/
+type TProps = IStateProps & IDispatchProps;
+type TState = IDetailParams & IStateComponent & IStateComponentInput
+
+class Employee extends React.Component<TProps, TState> {
   state = {
     divisionId: "",
     confirmOpen: false,
@@ -51,7 +70,7 @@ class Employee extends React.Component<TProps, {}> {
     this.props.actions.getEmployeeByIdDivision(Number(id));
   }
 
-  handleOpenModal = (e: any) => {
+  handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
@@ -59,7 +78,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  handleModalCancel = (e: any) => {
+  handleModalCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       confirmOpen: false,
@@ -70,7 +89,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  handleModalSubmit = (e: any) => {
+  handleModalSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems, divisionId } = this.state;
     this.props.actions.addEmployee({
@@ -83,7 +102,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  handleInputChange = (e: any) => {
+  handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
       ...this.state,
@@ -94,7 +113,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  handleOpenConfirm = (e: any) => {
+  handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
@@ -103,7 +122,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  deleteItem = (e: any) => {
+  deleteItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault;
     const { delatedId } = this.state;
     this.props.actions.deleteEmployee(delatedId);
@@ -113,7 +132,7 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  handleOpenEdit = (e: any) => {
+  handleOpenEdit = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     const id = e.currentTarget.dataset.id;
     const editemItem = this.searchEditedItem(id);
@@ -129,13 +148,13 @@ class Employee extends React.Component<TProps, {}> {
     });
   };
 
-  searchEditedItem(id: string) {
+  searchEditedItem(id: string): IEmployee {
     return this.props.employee.find(item => {
       return `${item.id}` === id;
     });
   }
 
-  saveEditedItem = (e: any) => {
+  saveEditedItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.editEmployee({
@@ -262,7 +281,15 @@ class Employee extends React.Component<TProps, {}> {
     );
   }
 }
-function mapStateToProps(state: any) {
+
+interface IEmployeeState {
+  employee: IEmployee[]
+}
+
+interface IMapStateToProps {
+  organization: IEmployeeState
+}
+function mapStateToProps(state: IMapStateToProps) {
   return {
     employee: state.organization.employee
   };

@@ -26,3 +26,12 @@ export interface IEmployee {
   address: string;
   position: string;
 }
+
+export interface IStateComponent {
+  confirmOpen: boolean;
+    modalOpen: boolean;
+    editOpen: boolean,
+    delatedId: string,
+    editedId: string,
+    completed: boolean,
+}

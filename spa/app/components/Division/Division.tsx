@@ -1,26 +1,43 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, match } from "react-router-dom";
 import { Dispatch } from "redux";
-import { IActionType } from "../../common";
+import { IActionType, IStateComponent } from "../../common";
 import { IDivision } from "../../common";
 import { Actions } from "../../Actions/Actions";
 import { Button } from "../button/Button";
 import { Modal } from "../modal/Modal";
 import { Inputs } from "../FormsInput/InputsItems";
 
-interface IStateProps {
-  division: IDivision[];
-  match: any;
+interface IDetailParams {
+  organizationId: string;
 }
 
-export interface IDispatchProps {
+interface IStateProps {
+  division: IDivision[];
+  match?: match<IDetailParams>;
+}
+
+interface IDispatchProps {
   actions: Actions;
 }
 
-type TProps = IStateProps & IDispatchProps;
+interface IInputInterface {
+  name: string,
+  phone: string
+}
 
-class Division extends React.Component<TProps, {}> {
+interface IStateComponentInput {
+  inputItems: IInputInterface;
+}
+
+/**
+* Итоговые пропсы и state компонента
+*/
+type TProps = IStateProps & IDispatchProps;
+type TState = IDetailParams & IStateComponent & IStateComponentInput
+
+class Division extends React.Component<TProps, TState> {
   state = {
     organizationId: "",
     confirmOpen: false,
@@ -48,14 +65,14 @@ class Division extends React.Component<TProps, {}> {
     this.updateData(id);
   }
 
-  handleOpenModal = (e: any) => {
+  handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
       modalOpen: true
     });
   };
-  handleModalCancel = (e: any) => {
+  handleModalCancel = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
       confirmOpen: false,
@@ -65,7 +82,7 @@ class Division extends React.Component<TProps, {}> {
       editedId: ""
     });
   };
-  handleModalSubmit = (e: any) => {
+  handleModalSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems, organizationId } = this.state;
     this.props.actions.addDivision({
@@ -78,7 +95,7 @@ class Division extends React.Component<TProps, {}> {
     });
   };
 
-  handleInputChange = (e: any) => {
+  handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
       ...this.state,
@@ -89,7 +106,7 @@ class Division extends React.Component<TProps, {}> {
     });
   };
 
-  handleOpenConfirm = (e: any) => {
+  handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
       ...this.state,
@@ -98,7 +115,7 @@ class Division extends React.Component<TProps, {}> {
     });
   };
 
-  deleteItem = (e: any) => {
+  deleteItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault;
     const { delatedId } = this.state;
     this.props.actions.deleteDivision(delatedId);
@@ -108,28 +125,29 @@ class Division extends React.Component<TProps, {}> {
     });
   };
 
-  handleOpenEdit = (e: any) => {
+  handleOpenEdit = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
-    const id = e.currentTarget.dataset.id;
+    const id = e.currentTarget.dataset.id;    
     const editemItem = this.searchEditedItem(id);
+    console.log(editemItem);
     this.setState({
       ...this.state,
       editOpen: true,
       editedId: id,
       inputItems: {
         name: editemItem.name,
-        phone: editemItem.phone
+        phone: `${editemItem.phone}`
       }
     });
   };
 
-  searchEditedItem(id: string) {
+  searchEditedItem(id: string): IDivision {
     return this.props.division.find(item => {
       return `${item.id}` === id;
     });
   }
 
-  saveEditedItem = (e: any) => {
+  saveEditedItem = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { inputItems } = this.state;
     this.props.actions.editDivision({
@@ -147,7 +165,7 @@ class Division extends React.Component<TProps, {}> {
   }
   renderItems() {
     const { division } = this.props;
-    let template: any;
+    let template: JSX.Element | JSX.Element[] | string;
     if (division.length <= 0) {
       template = <p>Нет подразделений</p>;
     } else {
@@ -265,7 +283,15 @@ class Division extends React.Component<TProps, {}> {
     );
   }
 }
-function mapStateToProps(state: any) {
+
+
+interface IDivisionState {
+  division: IDivision[]
+}
+interface IMapStateToProps {
+  organization: IDivisionState
+}
+function mapStateToProps(state: IMapStateToProps) {
   return {
     division: state.organization.division
   };

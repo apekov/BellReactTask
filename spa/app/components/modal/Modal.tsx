@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Button } from "../button/Button";
-import { Portal } from "./portal/Portal";
 
 import "./Modal.less";
+
 interface IModal {
   title: string;
   isOpen: boolean;
@@ -11,16 +11,6 @@ interface IModal {
   onSubmitAction: any;
 }
 class Modal extends React.Component<IModal, {}> {
-  // defaultProps = {
-  //   title: "",
-  //   isOpen: false,
-  //   onCancelAction: () => {
-  //     console.log("cancel");
-  //   },
-  //   onSubmit: () => {
-  //     console.log("onsubmit");
-  //   }
-  // };
   render() {
     const {
       title,
@@ -33,7 +23,7 @@ class Modal extends React.Component<IModal, {}> {
     return (
       <>
         {isOpen && (
-          <Portal>
+          <>
             <div className="modal_layer">
               <div className="modal_contain">
                 <div className="modal_header">
@@ -74,7 +64,7 @@ class Modal extends React.Component<IModal, {}> {
                 )}
               </div>
             </div>
-          </Portal>
+          </>
         )}
       </>
     );
