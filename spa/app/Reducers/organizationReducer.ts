@@ -1,12 +1,10 @@
-import { IActionType, IDivision, IEmployee } from "../common";
+import {
+  IActionType,
+  IDivision,
+  IEmployee,
+  IOrganizationItem
+} from "../common";
 import { ActionTypes, AsyncActionTypes, CrudTypes } from "../Actions/Consts";
-
-export interface IOrganizationItem {
-  id: number;
-  name: string;
-  address: string;
-  INN: number;
-}
 
 const organizationArray: IOrganizationItem[] = [];
 const divisionArray: IDivision[] = [];

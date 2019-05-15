@@ -3,13 +3,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
-import { IActionType, IStateComponent } from "../../common";
+import { IActionType, IOrganizationItem, IStateComponent } from "../../common";
 import { Actions } from "../../Actions/Actions";
-import { IOrganizationItem } from "../../Reducers/organizationReducer";
 import { Button } from "../button/Button";
 import { Modal } from "../modal/Modal";
 import { Inputs } from "../FormsInput/InputsItems";
-
 
 interface IStateProps {
   organization: IOrganizationItem[];
@@ -25,23 +23,23 @@ export interface IDispatchProps {
 }
 
 interface IInputInterface {
-    name: string,
-    address: string,
-    INN: string
+  name: string;
+  address: string;
+  INN: string;
 }
 
 interface IStateComponentInput {
-  inputItems: IInputInterface
+  inputItems: IInputInterface;
 }
 
 /**
  * Итоговые пропсы и state компонента
  */
 type TProps = IStateProps & IDispatchProps;
-type TState = IStateComponent & IStateComponentInput
+type TState = IStateComponent & IStateComponentInput;
 
 class Organization extends React.Component<TProps, TState> {
-  state = {
+  state: TState = {
     // модальное окно для удаления
     confirmOpen: false,
     // модальное окно для создания
@@ -71,7 +69,6 @@ class Organization extends React.Component<TProps, TState> {
   handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       modalOpen: true
     });
   };
@@ -94,7 +91,6 @@ class Organization extends React.Component<TProps, TState> {
     const { inputItems } = this.state;
     this.props.actions.addOrganization(inputItems);
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -103,7 +99,6 @@ class Organization extends React.Component<TProps, TState> {
   handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
-      ...this.state,
       inputItems: {
         ...this.state.inputItems,
         [target.id]: target.value
@@ -115,7 +110,6 @@ class Organization extends React.Component<TProps, TState> {
   handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       confirmOpen: true,
       delatedId: e.currentTarget.dataset.id
     });
@@ -127,7 +121,6 @@ class Organization extends React.Component<TProps, TState> {
     const { delatedId } = this.state;
     this.props.actions.deleteOrganization(delatedId);
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -138,7 +131,6 @@ class Organization extends React.Component<TProps, TState> {
     const id = e.currentTarget.dataset.id;
     const editemItem = this.searchEditedItem(id);
     this.setState({
-      ...this.state,
       editOpen: true,
       editedId: id,
       inputItems: {
@@ -165,7 +157,6 @@ class Organization extends React.Component<TProps, TState> {
       ...inputItems
     });
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -295,7 +286,7 @@ class Organization extends React.Component<TProps, TState> {
 }
 
 interface IMapStateToProps {
-  organization: IOrganizationItem[]
+  organization: IOrganizationItem[];
 }
 
 function mapStateToProps(state: IMapStateToProps) {

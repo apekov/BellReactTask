@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { match } from "react-router-dom";
 import { Dispatch } from "redux";
-import { match} from "react-router-dom"
 import { IActionType, IStateComponent } from "../../common";
 import { IEmployee } from "../../common";
 import { Actions } from "../../Actions/Actions";
@@ -23,9 +23,9 @@ interface IDispatchProps {
 }
 
 interface IInputInterface {
-  FIO: string,
-  address: string,
-  position: string
+  FIO: string;
+  address: string;
+  position: string;
 }
 
 interface IStateComponentInput {
@@ -33,13 +33,13 @@ interface IStateComponentInput {
 }
 
 /**
-* Итоговые пропсы и state компонента
-*/
+ * Итоговые пропсы и state компонента
+ */
 type TProps = IStateProps & IDispatchProps;
-type TState = IDetailParams & IStateComponent & IStateComponentInput
+type TState = IDetailParams & IStateComponent & IStateComponentInput;
 
 class Employee extends React.Component<TProps, TState> {
-  state = {
+  state: TState = {
     divisionId: "",
     confirmOpen: false,
     modalOpen: false,
@@ -73,7 +73,6 @@ class Employee extends React.Component<TProps, TState> {
   handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       modalOpen: true
     });
   };
@@ -97,7 +96,6 @@ class Employee extends React.Component<TProps, TState> {
       id_division: divisionId
     });
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -105,7 +103,6 @@ class Employee extends React.Component<TProps, TState> {
   handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
-      ...this.state,
       inputItems: {
         ...this.state.inputItems,
         [target.id]: target.value
@@ -116,7 +113,6 @@ class Employee extends React.Component<TProps, TState> {
   handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       confirmOpen: true,
       delatedId: e.currentTarget.dataset.id
     });
@@ -127,7 +123,6 @@ class Employee extends React.Component<TProps, TState> {
     const { delatedId } = this.state;
     this.props.actions.deleteEmployee(delatedId);
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -137,7 +132,6 @@ class Employee extends React.Component<TProps, TState> {
     const id = e.currentTarget.dataset.id;
     const editemItem = this.searchEditedItem(id);
     this.setState({
-      ...this.state,
       editOpen: true,
       editedId: id,
       inputItems: {
@@ -162,7 +156,6 @@ class Employee extends React.Component<TProps, TState> {
       ...inputItems
     });
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -283,11 +276,11 @@ class Employee extends React.Component<TProps, TState> {
 }
 
 interface IEmployeeState {
-  employee: IEmployee[]
+  employee: IEmployee[];
 }
 
 interface IMapStateToProps {
-  organization: IEmployeeState
+  organization: IEmployeeState;
 }
 function mapStateToProps(state: IMapStateToProps) {
   return {

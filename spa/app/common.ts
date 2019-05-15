@@ -10,6 +10,27 @@ export interface IActionType extends Action {
   payload?: any;
 }
 
+/**
+ * Модель данных для авторизации.
+ * @prop {string} name Имя пользователя.
+ * @prop {string} password Пароль пользователя.
+ */
+export interface ILoginData {
+  login: string;
+  password: string;
+}
+
+export interface ILoginState {
+  loginStatus: boolean;
+  loading: boolean;
+}
+// Организации
+export interface IOrganizationItem {
+  id: number;
+  name: string;
+  address: string;
+  INN: number;
+}
 // Подразделение
 export interface IDivision {
   id: number;
@@ -29,9 +50,9 @@ export interface IEmployee {
 
 export interface IStateComponent {
   confirmOpen: boolean;
-    modalOpen: boolean;
-    editOpen: boolean,
-    delatedId: string,
-    editedId: string,
-    completed: boolean,
+  modalOpen: boolean;
+  editOpen: boolean;
+  delatedId: string;
+  editedId: string;
+  completed: boolean;
 }

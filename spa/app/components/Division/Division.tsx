@@ -23,8 +23,8 @@ interface IDispatchProps {
 }
 
 interface IInputInterface {
-  name: string,
-  phone: string
+  name: string;
+  phone: string;
 }
 
 interface IStateComponentInput {
@@ -32,13 +32,13 @@ interface IStateComponentInput {
 }
 
 /**
-* Итоговые пропсы и state компонента
-*/
+ * Итоговые пропсы и state компонента
+ */
 type TProps = IStateProps & IDispatchProps;
-type TState = IDetailParams & IStateComponent & IStateComponentInput
+type TState = IDetailParams & IStateComponent & IStateComponentInput;
 
 class Division extends React.Component<TProps, TState> {
-  state = {
+  state: TState = {
     organizationId: "",
     confirmOpen: false,
     modalOpen: false,
@@ -59,7 +59,6 @@ class Division extends React.Component<TProps, TState> {
       }
     } = this.props;
     this.setState({
-      ...this.state,
       organizationId: id
     });
     this.updateData(id);
@@ -68,7 +67,6 @@ class Division extends React.Component<TProps, TState> {
   handleOpenModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       modalOpen: true
     });
   };
@@ -90,7 +88,6 @@ class Division extends React.Component<TProps, TState> {
       id_organization: organizationId
     });
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -98,7 +95,6 @@ class Division extends React.Component<TProps, TState> {
   handleInputChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     this.setState({
-      ...this.state,
       inputItems: {
         ...this.state.inputItems,
         [target.id]: target.value
@@ -109,7 +105,6 @@ class Division extends React.Component<TProps, TState> {
   handleOpenConfirm = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState({
-      ...this.state,
       confirmOpen: true,
       delatedId: e.currentTarget.dataset.id
     });
@@ -120,18 +115,16 @@ class Division extends React.Component<TProps, TState> {
     const { delatedId } = this.state;
     this.props.actions.deleteDivision(delatedId);
     this.setState({
-      ...this.state,
       completed: true
     });
   };
 
   handleOpenEdit = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
-    const id = e.currentTarget.dataset.id;    
+    const id = e.currentTarget.dataset.id;
     const editemItem = this.searchEditedItem(id);
     console.log(editemItem);
     this.setState({
-      ...this.state,
       editOpen: true,
       editedId: id,
       inputItems: {
@@ -155,7 +148,6 @@ class Division extends React.Component<TProps, TState> {
       ...inputItems
     });
     this.setState({
-      ...this.state,
       completed: true
     });
   };
@@ -284,12 +276,11 @@ class Division extends React.Component<TProps, TState> {
   }
 }
 
-
 interface IDivisionState {
-  division: IDivision[]
+  division: IDivision[];
 }
 interface IMapStateToProps {
-  organization: IDivisionState
+  organization: IDivisionState;
 }
 function mapStateToProps(state: IMapStateToProps) {
   return {

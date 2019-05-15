@@ -8,18 +8,15 @@ import { ActionTypes, AsyncActionTypes } from "../Actions/Consts";
  * @prop {boolean} counter Результат вычисления.
  * @prop {boolean} counterIsLoading Выполнение вычисления.
  */
-// interface IStoreState {
-//   loginStatus: boolean;
-//   loading: boolean;
-// }
-// export interface IStoreState {
-//   user: IUserState;
-// }
+interface IStoreState {
+  loginStatus: boolean;
+  loading: boolean;
+}
 
 /**
  * Начальное состояние стора.
  */
-const initialState = {
+const initialState: IStoreState = {
   loginStatus: false,
   loading: false
 };

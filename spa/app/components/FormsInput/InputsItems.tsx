@@ -10,8 +10,7 @@ export const Inputs = (data: any) => {
         return (
           <p key={item}>
             <label htmlFor={item}>{item}</label>
-            <input
-              className="form-control"
+            <input className="form-control"
               type="text"
               id={item}
               value={value}

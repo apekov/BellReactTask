@@ -17,18 +17,18 @@ interface IDispatchProps {
   actions: Actions;
 }
 
-interface IStateComponent{
-  login: string,
-  password: string
+interface IStateComponent {
+  login: string;
+  password: string;
 }
 
 /**
-* Итоговые пропсы и state компонента
-*/
+ * Итоговые пропсы и state компонента
+ */
 type TProps = IStateProps & IDispatchProps;
 
 class Login extends React.Component<TProps, IStateComponent> {
-  state = {
+  state: IStateComponent = {
     login: "",
     password: ""
   };
@@ -47,7 +47,7 @@ class Login extends React.Component<TProps, IStateComponent> {
 
   handleLogout = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.props.actions.onLogout()
+    this.props.actions.onLogout();
   };
 
   renderForm = () => {
@@ -111,8 +111,8 @@ class Login extends React.Component<TProps, IStateComponent> {
     );
   }
 }
-interface IUser { 
-  user: IStateComponent
+interface IUser {
+  user: IStateComponent;
 }
 function mapStateToProps(state: IUser) {
   return state.user;

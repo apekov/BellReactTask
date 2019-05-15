@@ -1,8 +1,7 @@
 import Axios from "axios";
 import { Dispatch } from "redux";
-import { IActionType } from "../common";
+import { IActionType, ILoginData } from "../common";
 import { ActionTypes, AsyncActionTypes, CrudTypes } from "./Consts";
-import { ILoginData } from "./Models";
 
 /**
  * Экшены для приложения.
